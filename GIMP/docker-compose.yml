@@ -1,0 +1,11 @@
+services:
+  gimp:
+    image: lscr.io/linuxserver/gimp:latest
+    container_name: gimp
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+      - "3001:3001"
+      - "3100:3100"
+    volumes:
+      - ./config:/config

@@ -1,0 +1,9 @@
+services:
+  python:
+    image: python:latest
+    container_name: python-latest
+    stdin_open: true
+    tty: true
+    volumes:
+      - .:/app
+    working_dir: /app

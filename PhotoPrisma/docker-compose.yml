@@ -1,0 +1,48 @@
+services:
+  photoprism:
+    image: photoprism/photoprism:latest
+    container_name: photoprism
+    ports:
+      - "2342:2342"
+
+    environment:
+      PHOTOPRISM_ADMIN_USER: admin
+      PHOTOPRISM_ADMIN_PASSWORD: admin123
+      PHOTOPRISM_SITE_URL: "http://localhost:2342"
+
+      # Base de datos
+      PHOTOPRISM_DATABASE_DRIVER: mysql
+      PHOTOPRISM_DATABASE_SERVER: mariadb:3306
+      PHOTOPRISM_DATABASE_NAME: photoprism
+      PHOTOPRISM_DATABASE_USER: photoprism
+      PHOTOPRISM_DATABASE_PASSWORD: photoprism
+
+      # 🚀 IA / rendimiento
+      PHOTOPRISM_FFMPEG_BIN: /usr/bin/ffmpeg
+      PHOTOPRISM_INIT: "tensorflow"
+      PHOTOPRISM_DETECT_NSFW: "true"
+      PHOTOPRISM_UPLOAD_NSFW: "true"
+      PHOTOPRISM_ORIGINALS_LIMIT: 10000
+
+      # Mejora indexado
+      PHOTOPRISM_INDEX_SCHEDULE: "@every 1h"
+
+    volumes:
+      - "./originals:/photoprism/originals"
+      - "./storage:/photoprism/storage"
+
+    restart: unless-stopped
+    depends_on:
+      - mariadb
+
+  mariadb:
+    image: mariadb:11
+    container_name: photoprism-db
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: photoprism
+      MYSQL_USER: photoprism
+      MYSQL_PASSWORD: photoprism
+    volumes:
+      - "./database:/var/lib/mysql"
+    restart: unless-stopped

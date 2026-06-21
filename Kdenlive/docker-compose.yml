@@ -1,0 +1,15 @@
+services:
+  kdenlive:
+    image: lscr.io/linuxserver/kdenlive:latest
+    container_name: kdenlive
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=America/Merida
+    volumes:
+      - ./config:/config
+      - ./projects:/projects
+
