@@ -1,0 +1,7 @@
+services:
+  nmap:
+    image: instrumentisto/nmap:latest
+    container_name: nmap
+    stdin_open: true
+    tty: true
+    command: ["sleep", "infinity"]

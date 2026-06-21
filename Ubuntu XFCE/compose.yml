@@ -1,0 +1,15 @@
+services:
+  webtop:
+    image: lscr.io/linuxserver/webtop:ubuntu-xfce
+    container_name: kali-web
+    privileged: true
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=America/Merida
+    volumes:
+      - ./config:/config
+    ports:
+      - 3000:3000
+    shm_size: "2gb"
+    restart: unless-stopped
